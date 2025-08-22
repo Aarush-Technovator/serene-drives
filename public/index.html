@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serene Drives | Peaceful 3D Driving</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script type="module" src="/js/main.js"></script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-overlay">
+        <h1 class="title">Serene Drives</h1>
+        
+        <div class="dashboard">
+            <div class="speedometer">
+                <div class="speed-value">00</div>
+                <div class="speed-unit">km/h</div>
+            </div>
+        </div>
+        
+        <div class="controls-hint">
+            <div>W/A/S/D - Drive</div>
+            <div>R - Reset Car</div>
+            <div>Space - Handbrake</div>
+            <div>C - Change Camera</div>
+        </div>
+        
+        <div class="environment-controls">
+            <div class="control-item">
+                <label for="time-of-day">Time:</label>
+                <input type="range" id="time-of-day" min="0" max="100" value="30">
+            </div>
+            <div class="control-item">
+                <label for="fog-density">Fog:</label>
+                <input type="range" id="fog-density" min="0" max="100" value="20">
+            </div>
+            <div class="control-item">
+                <label for="weather">Weather:</label>
+                <input type="range" id="weather" min="0" max="100" value="0">
+            </div>
+        </div>
+        
+        <div class="message">
+            Drive through serene landscapes and enjoy the peaceful journey
+        </div>
+        
+        <nav class="main-nav">
+            <a href="/about" class="nav-item">About</a>
+            <a href="/levels" class="nav-item">Levels</a>
+            <a href="/garage" class="nav-item">Garage</a>
+            <a href="/settings" class="nav-item">Settings</a>
+        </nav>
+    </div>
+    
+    <div class="loading-screen">
+        <div class="logo">SERENE DRIVES</div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Serene Drives</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .page-container {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.3);
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .back-button:hover {
+            background: rgba(50, 100, 150, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .settings-group {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .settings-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #64c8ff;
+        }
+        
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .settings-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .save-button {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #00aaff, #00ffaa);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+        }
+        
+        .reset-button {
+            padding: 12px 24px;
+            background: rgba(255, 100, 100, 0.3);
+            border: 1px solid rgba(255, 100, 100, 0.5);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .reset-button:hover {
+            background: rgba(255, 100, 100, 0.5);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Game Settings</h1>
+            <a href="/" class="back-button">Back to Main Menu</a>
+        </header>
+        
+        <main class="page-content">
+            <div class="settings-container">
+                <div class="settings-group">
+                    <h3 class="settings-title">Graphics</h3>
+                    <div class="settings-item">
+                        <label>Quality Preset</label>
+                        <select id="quality-preset">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                            <option value="ultra">Ultra</option>
+                        </select>
+                    </div>
+                    <div class="settings-item">
+                        <label>Resolution</label>
+                        <select id="resolution">
+                            <option value="720">720p</option>
+                            <option value="1080" selected>1080p</option>
+                            <option value="1440">1440p</option>
+                            <option value="2160">4K</option>
+                        </select>
+                    </div>
+                    <div class="settings-item">
+                        <label>Anti-aliasing</label>
+                        <select id="anti-aliasing">
+                            <option value="0">Off</option>
+                            <option value="2" selected>2x</option>
+                            <option value="4">4x</option>
+                            <option value="8">8x</option>
+                        </select>
+                    </div>
+                    <div class="settings-item">
+                        <label>Shadow Quality</label>
+                        <select id="shadow-quality">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3 class="settings-title">Audio</h3>
+                    <div class="settings-item">
+                        <label>Master Volume</label>
+                        <input type="range" min="0" max="100" value="80" id="master-volume">
+                    </div>
+                    <div class="settings-item">
+                        <label>Music Volume</label>
+                        <input type="range" min="0" max="100" value="70" id="music-volume">
+                    </div>
+                    <div class="settings-item">
+                        <label>Effects Volume</label>
+                        <input type="range" min="0" max="100" value="90" id="effects-volume">
+                    </div>
+                    <div class="settings-item">
+                        <label>Ambience Volume</label>
+                        <input type="range" min="0" max="100" value="100" id="ambience-volume">
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3 class="settings-title">Controls</h3>
+                    <div class="settings-item">
+                        <label>Steering Sensitivity</label>
+                        <input type="range" min="0" max="100" value="50" id="steering-sensitivity">
+                    </div>
+                    <div class="settings-item">
+                        <label>Invert Y-Axis</label>
+                        <input type="checkbox" id="invert-y-axis">
+                    </div>
+                    <div class="settings-item">
+                        <label>Controller Vibration</label>
+                        <input type="checkbox" id="controller-vibration" checked>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="save-button" id="apply-settings">Apply Settings</button>
+                    <button class="reset-button" id="reset-settings">Reset to Defaults</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="notification" id="notification">Settings Applied Successfully</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply settings button
+            document.getElementById('apply-settings').addEventListener('click', function() {
+                // Get all settings values
+                const settings = {
+                    graphics: {
+                        quality: document.getElementById('quality-preset').value,
+                        resolution: document.getElementById('resolution').value,
+                        antiAliasing: document.getElementById('anti-aliasing').value,
+                        shadowQuality: document.getElementById('shadow-quality').value
+                    },
+                    audio: {
+                        master: document.getElementById('master-volume').value,
+                        music: document.getElementById('music-volume').value,
+                        effects: document.getElementById('effects-volume').value,
+                        ambience: document.getElementById('ambience-volume').value
+                    },
+                    controls: {
+                        steeringSensitivity: document.getElementById('steering-sensitivity').value,
+                        invertYAxis: document.getElementById('invert-y-axis').checked,
+                        controllerVibration: document.getElementById('controller-vibration').checked
+                    }
+                };
+                
+                // Show notification
+                const notification = document.getElementById('notification');
+                notification.textContent = 'Settings applied successfully!';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+                
+                // In a real application, you would send this to the server
+                console.log('Settings applied:', settings);
+                
+                // Simulate API call
+                fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(settings)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Server response:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+            
+            // Reset settings button
+            document.getElementById('reset-settings').addEventListener('click', function() {
+                // Reset to default values
+                document.getElementById('quality-preset').value = 'medium';
+                document.getElementById('resolution').value = '1080';
+                document.getElementById('anti-aliasing').value = '2';
+                document.getElementById('shadow-quality').value = 'medium';
+                
+                document.getElementById('master-volume').value = '80';
+                document.getElementById('music-volume').value = '70';
+                document.getElementById('effects-volume').value = '90';
+                document.getElementById('ambience-volume').value = '100';
+                
+                document.getElementById('steering-sensitivity').value = '50';
+                document.getElementById('invert-y-axis').checked = false;
+                document.getElementById('controller-vibration').checked = true;
+                
+                // Show notification
+                const notification = document.getElementById('notification');
+                notification.textContent = 'Settings reset to defaults!';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>

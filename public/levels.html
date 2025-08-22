@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serene Drives | Level Selection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #0a1929;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .page-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.3);
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .back-button:hover {
+            background: rgba(50, 100, 150, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+            flex-grow: 1;
+        }
+        
+        .level-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .level-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(100, 200, 255, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .level-card.selected {
+            border-color: rgba(100, 200, 255, 0.8);
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        .level-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .level-image-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            transition: all 0.5s ease;
+        }
+        
+        .level-card:hover .level-image-inner {
+            transform: scale(1.05);
+        }
+        
+        .level-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #64c8ff;
+        }
+        
+        .level-desc {
+            opacity: 0.8;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .level-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            opacity: 0.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px;
+        }
+        
+        .level-difficulty {
+            display: flex;
+            align-items: center;
+        }
+        
+        .difficulty-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .difficulty-easy {
+            background: #4caf50;
+        }
+        
+        .difficulty-medium {
+            background: #ff9800;
+        }
+        
+        .difficulty-hard {
+            background: #f44336;
+        }
+        
+        .play-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00aaff, #00ffaa);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+        }
+        
+        .play-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 200, 255, 0.5);
+            border-radius: 10px;
+            border: 3px solid rgba(0, 0, 0, 0);
+            background-clip: padding-box;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 200, 255, 0.8);
+            border: 2px solid rgba(0, 0, 0, 0);
+            background-clip: padding-box;
+        }
+        
+        /* Selection info panel */
+        .selection-info {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .selection-info.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .selected-level-title {
+            color: #64c8ff;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .selected-level-desc {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #4caf50;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 20px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Choose Your Driving Environment</h1>
+            <a href="#" class="back-button">Back to Main Menu</a>
+        </header>
+        
+        <main class="page-content">
+            <div class="levels-grid">
+                <div class="level-card" data-level="sunset-valley">
+                    <div class="level-image">
+                        <div class="level-image-inner" style="background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d)"></div>
+                    </div>
+                    <h3 class="level-title">Sunset Valley</h3>
+                    <p class="level-desc">Rolling hills and winding roads bathed in the golden light of sunset. Perfect for a relaxing evening drive.</p>
+                    <div class="level-meta">
+                        <span>Length: 12km</span>
+                        <span class="level-difficulty">
+                            <span class="difficulty-dot difficulty-easy"></span>
+                            Easy
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="level-card" data-level="mountain-pass">
+                    <div class="level-image">
+                        <div class="level-image-inner" style="background: linear-gradient(45deg, #0f2027, #203a43, #2c5364)"></div>
+                    </div>
+                    <h3 class="level-title">Mountain Pass</h3>
+                    <p class="level-desc">Steep climbs and breathtaking views from high mountain roads. Experience the thrill of elevation changes.</p>
+                    <div class="level-meta">
+                        <span>Length: 18km</span>
+                        <span class="level-difficulty">
+                            <span class="difficulty-dot difficulty-medium"></span>
+                            Medium
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="level-card" data-level="lakeside-cruise">
+                    <div class="level-image">
+                        <div class="level-image-inner" style="background: linear-gradient(45deg, #00416a, #e4e5e6)"></div>
+                    </div>
+                    <h3 class="level-title">Lakeside Cruise</h3>
+                    <p class="level-desc">Peaceful roads following the shoreline of a crystal-clear lake. The perfect serene driving experience.</p>
+                    <div class="level-meta">
+                        <span>Length: 10km</span>
+                        <span class="level-difficulty">
+                            <span class="difficulty-dot difficulty-easy"></span>
+                            Easy
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="level-card" data-level="autumn-forest">
+                    <div class="level-image">
+                        <div class="level-image-inner" style="background: linear-gradient(45deg, #556270, #ff6b6b)"></div>
+                    </div>
+                    <h3 class="level-title">Autumn Forest</h3>
+                    <p class="level-desc">Colorful fall foliage lines the roads through this dense woodland. Experience the changing seasons as you drive.</p>
+                    <div class="level-meta">
+                        <span>Length: 15km</span>
+                        <span class="level-difficulty">
+                            <span class="difficulty-dot difficulty-medium"></span>
+                            Medium
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="level-card" data-level="coastal-highway">
+                    <div class="level-image">
+                        <div class="level-image-inner" style="background: linear-gradient(45deg, #3a7bd5, #00d2ff)"></div>
+                    </div>
+                    <h3 class="level-title">Coastal Highway</h3>
+                    <p class="level-desc">Ocean views and gentle sea breezes on this coastal driving route. The sound of waves accompanies your journey.</p>
+                    <div class="level-meta">
+                        <span>Length: 22km</span>
+                        <span class="level-difficulty">
+                            <span class="difficulty-dot difficulty-medium"></span>
+                            Medium
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="level-card" data-level="night-drive">
+                    <div class="level-image">
+                        <div class="level-image-inner" style="background: linear-gradient(45deg, #606c88, #3f4c6b)"></div>
+                    </div>
+                    <h3 class="level-title">Night Drive</h3>
+                    <p class="level-desc">City lights and moonlit roads for a completely different experience. Test your driving skills in low light conditions.</p>
+                    <div class="level-meta">
+                        <span>Length: 14km</span>
+                        <span class="level-difficulty">
+                            <span class="difficulty-dot difficulty-hard"></span>
+                            Hard
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="selection-info" id="selectionInfo">
+                <h2 class="selected-level-title" id="selectedLevelTitle">Select a level to see details</h2>
+                <p class="selected-level-desc" id="selectedLevelDesc">Click on any level card to view more information about that environment.</p>
+                
+                <ul class="feature-list" id="featureList">
+                    <li>Dynamic weather system</li>
+                    <li>Realistic time-of-day lighting</li>
+                    <li>Interactive elements along the route</li>
+                </ul>
+                
+                <a href="#" class="play-button" id="playButton" disabled>Select a Level First</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const levelCards = document.querySelectorAll('.level-card');
+            const selectionInfo = document.getElementById('selectionInfo');
+            const selectedLevelTitle = document.getElementById('selectedLevelTitle');
+            const selectedLevelDesc = document.getElementById('selectedLevelDesc');
+            const featureList = document.getElementById('featureList');
+            const playButton = document.getElementById('playButton');
+            
+            // Level data with more details
+            const levelData = {
+                'sunset-valley': {
+                    title: 'Sunset Valley',
+                    description: 'Experience the breathtaking beauty of golden hour in this serene valley environment. The setting sun casts long shadows and creates a warm, inviting atmosphere perfect for a relaxing drive.',
+                    features: [
+                        'Dynamic sunset lighting that changes as you drive',
+                        'Gentle rolling hills with smooth curves',
+                        'Wildlife occasionally crossing the road',
+                        'Special sunset visual effects'
+                    ],
+                    difficulty: 'easy',
+                    length: '12km'
+                },
+                'mountain-pass': {
+                    title: 'Mountain Pass',
+                    description: 'Navigate the challenging twists and turns of high-altitude mountain roads. The thin air and steep drops will test your driving skills while rewarding you with spectacular views.',
+                    features: [
+                        'Elevation changes affecting vehicle performance',
+                        'Dramatic weather changes at higher altitudes',
+                        'Tight corners and challenging curves',
+                        'Breathtaking vista points'
+                    ],
+                    difficulty: 'medium',
+                    length: '18km'
+                },
+                'lakeside-cruise': {
+                    title: 'Lakeside Cruise',
+                    description: 'Enjoy a peaceful drive along the shores of a crystal-clear lake. The calm waters and gentle breezes create the most relaxing driving experience in the game.',
+                    features: [
+                        'Reflective water surfaces with realistic shaders',
+                        'Occasional boat traffic on the lake',
+                        'Fishing spots and picnic areas to discover',
+                        'Smooth, well-maintained roads'
+                    ],
+                    difficulty: 'easy',
+                    length: '10km'
+                },
+                'autumn-forest': {
+                    title: 'Autumn Forest',
+                    description: 'Drive through a vibrant forest during the peak of autumn. The falling leaves and colorful canopy create a magical atmosphere that changes as you progress.',
+                    features: [
+                        'Procedurally generated falling leaves',
+                        'Dynamic color changes throughout the drive',
+                        'Forest animals that may cross your path',
+                        'Seasonal weather effects'
+                    ],
+                    difficulty: 'medium',
+                    length: '15km'
+                },
+                'coastal-highway': {
+                    title: 'Coastal Highway',
+                    description: 'Follow the coastline on this scenic highway with ocean views on one side and dramatic cliffs on the other. The sound of waves accompanies your entire journey.',
+                    features: [
+                        'Realistic wave simulation and water physics',
+                        'Tide changes that affect the driving experience',
+                        'Seaside towns and landmarks to discover',
+                        'Bridge crossings and tunnel sections'
+                    ],
+                    difficulty: 'medium',
+                    length: '22km'
+                },
+                'night-drive': {
+                    title: 'Night Drive',
+                    description: 'Test your skills with this challenging night driving environment. Limited visibility and unpredictable urban elements create a completely different experience.',
+                    features: [
+                        'Dynamic lighting system with headlight effects',
+                        'Working traffic lights and urban signage',
+                        'Unexpected events and obstacles',
+                        'Special night-only visual effects'
+                    ],
+                    difficulty: 'hard',
+                    length: '14km'
+                }
+            };
+            
+            // Add click event to each level card
+            levelCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const levelId = this.getAttribute('data-level');
+                    
+                    // Remove selected class from all cards
+                    levelCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selected class to clicked card
+                    this.classList.add('selected');
+                    
+                    // Update selection info
+                    const data = levelData[levelId];
+                    selectedLevelTitle.textContent = data.title;
+                    selectedLevelDesc.textContent = data.description;
+                    
+                    // Update features list
+                    featureList.innerHTML = '';
+                    data.features.forEach(feature => {
+                        const li = document.createElement('li');
+                        li.textContent = feature;
+                        featureList.appendChild(li);
+                    });
+                    
+                    // Update play button
+                    playButton.textContent = `Drive in ${data.title}`;
+                    playButton.removeAttribute('disabled');
+                    playButton.href = `/game.html?level=${levelId}`;
+                    
+                    // Show selection info
+                    selectionInfo.classList.add('visible');
+                });
+            });
+            
+            // Make sure the page is scrollable
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+        });
+    </script>
+</body>
+</html>

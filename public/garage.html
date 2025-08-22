@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage - Serene Drives</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .page-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.3);
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .back-button:hover {
+            background: rgba(50, 100, 150, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .garage-container {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .car-display {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .car-options {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .option-group {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .option-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #64c8ff;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s ease;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.selected {
+            border-color: white;
+            transform: scale(1.1);
+        }
+        
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        
+        .slider-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .slider-container input {
+            width: 100%;
+        }
+        
+        .save-button {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #00aaff, #00ffaa);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Customize Your Vehicle</h1>
+            <a href="/" class="back-button">Back to Main Menu</a>
+        </header>
+        
+        <main class="page-content">
+            <div class="garage-container">
+                <div class="car-display">
+                    <!-- 3D car visualization would go here -->
+                    <div style="text-align: center;">
+                        <p>3D Car Preview</p>
+                        <p>(Would be implemented with Three.js)</p>
+                    </div>
+                </div>
+                
+                <div class="car-options">
+                    <div class="option-group">
+                        <h3 class="option-title">Car Model</h3>
+                        <div class="color-options">
+                            <div class="color-option selected" style="background: #3568d4" data-color="3568d4"></div>
+                            <div class="color-option" style="background: #d43535" data-color="d43535"></div>
+                            <div class="color-option" style="background: #35d449" data-color="35d449"></div>
+                            <div class="color-option" style="background: #d4c235" data-color="d4c235"></div>
+                            <div class="color-option" style="background: #9935d4" data-color="9935d4"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h3 class="option-title">Paint Color</h3>
+                        <div class="color-options">
+                            <div class="color-option selected" style="background: #3568d4" data-color="3568d4"></div>
+                            <div class="color-option" style="background: #d43535" data-color="d43535"></div>
+                            <div class="color-option" style="background: #35d449" data-color="35d449"></div>
+                            <div class="color-option" style="background: #d4c235" data-color="d4c235"></div>
+                            <div class="color-option" style="background: #9935d4" data-color="9935d4"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h3 class="option-title">Performance</h3>
+                        <div class="slider-container">
+                            <label>Engine Power</label>
+                            <input type="range" min="0" max="100" value="50" id="engine-power">
+                        </div>
+                        <div class="slider-container">
+                            <label>Handling</label>
+                            <input type="range" min="0" max="100" value="50" id="handling">
+                        </div>
+                        <div class="slider-container">
+                            <label>Braking</label>
+                            <input type="range" min="0" max="100" value="50" id="braking">
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h3 class="option-title">Wheels</h3>
+                        <div class="color-options">
+                            <div class="color-option selected" style="background: #222222" data-color="222222"></div>
+                            <div class="color-option" style="background: #888888" data-color="888888"></div>
+                            <div class="color-option" style="background: #cccccc" data-color="cccccc"></div>
+                            <div class="color-option" style="background: #553311" data-color="553311"></div>
+                            <div class="color-option" style="background: #d43535" data-color="d43535"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="save-button" id="saveCustomization">Save Customization</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="notification" id="notification">Customization Saved</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Color selection
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options in the same group
+                    const parentGroup = this.closest('.color-options');
+                    parentGroup.querySelectorAll('.color-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Save customization
+            document.getElementById('saveCustomization').addEventListener('click', function() {
+                // Get all selected values
+                const carModel = document.querySelector('.option-group:nth-child(1) .color-option.selected').getAttribute('data-color');
+                const paintColor = document.querySelector('.option-group:nth-child(2) .color-option.selected').getAttribute('data-color');
+                const enginePower = document.getElementById('engine-power').value;
+                const handling = document.getElementById('handling').value;
+                const braking = document.getElementById('braking').value;
+                const wheels = document.querySelector('.option-group:nth-child(4) .color-option.selected').getAttribute('data-color');
+                
+                // Create customization object
+                const customization = {
+                    carModel,
+                    paintColor,
+                    enginePower,
+                    handling,
+                    braking,
+                    wheels
+                };
+                
+                // Send to server (simulated with a timeout)
+                const notification = document.getElementById('notification');
+                notification.textContent = 'Customization saved successfully!';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+                
+                // In a real application, you would send this to the server
+                console.log('Customization saved:', customization);
+                
+                // Simulate API call
+                fetch('/api/customize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(customization)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Server response:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

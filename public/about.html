@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Serene Drives</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .page-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(50, 100, 150, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .page-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .content-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content-card h2 {
+            margin-bottom: 20px;
+            color: #64c8ff;
+        }
+        
+        .content-card p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .content-card ul {
+            padding-left: 20px;
+        }
+        
+        .content-card li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>About Serene Drives</h1>
+            <a href="/" class="back-button">Back to Game</a>
+        </header>
+        
+        <main class="page-content">
+            <div class="content-card">
+                <h2>The Concept</h2>
+                <p>Serene Drives is a peaceful driving experience designed to help you relax and unwind. Unlike traditional racing games, there are no time limits, no opponents, and no pressure.</p>
+                <p>Just you, your car, and beautiful procedurally generated landscapes to explore at your own pace.</p>
+            </div>
+            
+            <div class="content-card">
+                <h2>Features</h2>
+                <ul>
+                    <li>Beautiful 3D environments with dynamic weather and day/night cycles</li>
+                    <li>Realistic physics with satisfying driving mechanics</li>
+                    <li>Multiple camera angles for different perspectives</li>
+                    <li>Customizable car appearance and performance</li>
+                    <li>Soothing ambient soundtrack and nature sounds</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h2>Technology</h2>
+                <p>Serene Drives is built with Three.js, a powerful JavaScript 3D library that runs directly in your browser without requiring any plugins or downloads.</p>
+                <p>The game uses advanced rendering techniques including dynamic lighting, fog effects, and realistic materials to create an immersive experience.</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+
+        // Make sure the page is scrollable
+        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+
+    </script>
+</body>
+</html>
